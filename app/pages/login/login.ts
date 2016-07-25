@@ -1,25 +1,24 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {FacebookLogin} from '../../util/facebook-login';
+import {Fire} from '../../util/fire';
 
-/*
-  Generated class for the LoginPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   templateUrl: 'build/pages/login/login.html',
 })
 export class LoginPage {
 
-  constructor(private nav: NavController) {
+  constructor(private nav: NavController, private fire: Fire) {
 
   }
 
   onLogin() {
     FacebookLogin.login(response => {
-      alert(response);
+      this.fire.login(response.accessToken, () => {
+        alert('sucesso');
+      }, error => {
+        alert(error);
+      })
     }, error => {
       alert(error.errorMessage);
     });
