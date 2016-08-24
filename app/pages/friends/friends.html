@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>friends</ion-title>
+    <ion-title>Amigos</ion-title>
     <button menuToggle><ion-icon name="menu"></ion-icon></button>
   </ion-navbar>
 
@@ -10,10 +10,9 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let friend of friends">
+    <ion-item *ngFor="let friend of friends" (click)="openMap(friend)">
       {{friend.name}}
     </ion-item>
   </ion-list>
 
-  <button (click)="openMap()">Mapa</button>
 </ion-content>

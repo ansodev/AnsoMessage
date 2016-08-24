@@ -28,6 +28,10 @@ export class Fire {
     })
   }
 
+  getDB() {
+    return firebase;
+  }
+
   private setUser(token: string, authData: any) {
     this.user.name = authData.displayName;
     this.user.photo = authData.photoURL;

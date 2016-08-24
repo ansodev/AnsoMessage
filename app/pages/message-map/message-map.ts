@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, Platform, NavParams } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
+import { Messages } from '../../util/messages';
 
 declare var google: any;
 
@@ -9,8 +10,12 @@ declare var google: any;
 })
 
 export class MessageMapPage {
+  friend: any;
+  message: string;
+  position: any = {};
 
-  constructor(private nav: NavController, platform: Platform) {
+  constructor(private nav: NavController, private params: NavParams,
+    private messages: Messages, platform: Platform) {
 
     platform.ready().then(() => {
       this.initPage();
@@ -18,6 +23,8 @@ export class MessageMapPage {
   }
 
   private initPage() {
+    this.friend = this.params.get('friend') || {};
+
     Geolocation.getCurrentPosition().then(result => {
       this.loadMap(result.coords.latitude, result.coords.longitude);
     });
@@ -56,8 +63,15 @@ export class MessageMapPage {
     marker.setMap(map);
 
     this.getAddress(latLng, address => {
-      alert(address);
+      this.position.lat = latLng.lat();
+      this.position.lng = latLng.lng();
+      this.position.address = address;
     })
   }
 
+  onSendMessage() {
+    this.messages.send(this.friend, this.message, this.position).then(() => {
+      this.nav.pop();
+    });
+  }
 }

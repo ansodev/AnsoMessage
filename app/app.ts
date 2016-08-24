@@ -3,6 +3,7 @@ import {Platform, ionicBootstrap} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {LoginPage} from './pages/login/login';
 import {Fire} from './util/fire';
+import {Messages} from './util/messages';
 
 
 @Component({
@@ -20,4 +21,4 @@ export class MyApp {
   }
 }
 
-ionicBootstrap(MyApp, [Fire]);
+ionicBootstrap(MyApp, [Fire, Messages]);

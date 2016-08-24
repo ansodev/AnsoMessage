@@ -21,7 +21,7 @@ export class FriendsPage {
     });
   }
 
-  openMap() {
-    this.nav.push(MessageMapPage);
+  openMap(friend) {
+    this.nav.push(MessageMapPage, { friend });
   }
 }

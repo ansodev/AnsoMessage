@@ -8,6 +8,19 @@
 
 
 <ion-content>
+  <div class="box">
+    <ion-list no-lines>
+      <ion-item>
+        <ion-label stacked>Mensagem</ion-label>
+        <ion-textarea type="text" placeholder="Digite aqui sua mensagem" [(ngModel)]="message"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <button block (click)="onSendMessage()">Enviar</button>
+      </ion-item>
+    </ion-list>
+  </div>
+
   <div id="map">
 
   </div>
