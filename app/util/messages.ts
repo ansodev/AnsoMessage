@@ -24,4 +24,21 @@ export class Messages {
       read: false
     });
   }
+
+  get(successCallback) {
+    let ref = this.firebase.database().ref('messages').child(this.user.id);
+
+    ref.orderByChild('read').equalTo(false).on('child_added', (snapshot) => {
+      let message = snapshot.val();
+
+      message.map =  "https://maps.googleapis.com/maps/api/staticmap?center=" +
+        message.lat + ", " + message.lng +
+        "&zoom=15&size=400x400" +
+        "&markers=color:red%7Clabel:S%7C" +
+        message.lat + ", " + message.lng +
+        "&maptype=roadmap&key=AIzaSyBst0zq0LAxMY09cHkYffDgfkr_jDt68Sg";
+
+      successCallback(message);
+    })
+  }
 }

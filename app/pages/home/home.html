@@ -7,6 +7,12 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-card *ngFor="let message of messagesList">
+    {{message.address}}
 
+    <img [src]="message.map" alt="" />
+
+    {{message.senderName}}
+  </ion-card>
 </ion-content>
