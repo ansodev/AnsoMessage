@@ -9,10 +9,22 @@
 
 <ion-content>
   <ion-card *ngFor="let message of messagesList">
-    {{message.address}}
+    <div class="box-address">
+      {{message.address}}
+    </div>
 
-    <img [src]="message.map" alt="" />
+    <div class="box-img">
+      <img [src]="message.map" alt="" />
+      <button fab fab-right fab-top class="fab-map"><ion-icon name="navigate"></ion-icon></button>
+    </div>
 
-    {{message.senderName}}
+    <ion-card-content>
+      <h2>{{message.senderName}}</h2>
+      <p>
+        Você está a {{message.distance}}km do local desta mensagem
+      </p>
+      <button primary clear block>Ler</button>
+    </ion-card-content>
+
   </ion-card>
 </ion-content>

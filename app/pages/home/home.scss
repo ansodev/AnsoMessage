@@ -1,3 +1,22 @@
 .home {
-  
+
+}
+
+.box-address {
+  text-align: center;
+  height: 50px;
+  background: #5096E5;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.box-img {
+  position: relative;
+}
+
+button[fab].fab-map {
+  top: calc(100% - 35px);
 }
