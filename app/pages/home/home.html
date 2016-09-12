@@ -15,7 +15,7 @@
 
     <div class="box-img">
       <img [src]="message.map" alt="" />
-      <button fab fab-right fab-top class="fab-map"><ion-icon name="navigate"></ion-icon></button>
+      <button fab fab-right fab-top class="fab-map" (click)="openRoute(message)"><ion-icon name="navigate"></ion-icon></button>
     </div>
 
     <ion-card-content>
@@ -23,7 +23,7 @@
       <p>
         Você está a {{message.distance}}km do local desta mensagem
       </p>
-      <button primary clear block>Ler</button>
+      <button primary clear block (click)="openMessage(message)">Ler</button>
     </ion-card-content>
 
   </ion-card>

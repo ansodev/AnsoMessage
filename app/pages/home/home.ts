@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import { Messages } from '../../util/messages';
 import { Geolocation } from 'ionic-native';
+import { MessageRoutePage } from '../message-route/message-route';
+import { MessageViewPage } from '../message-view/message-view';
 
 declare var geolib: any;
 
@@ -14,6 +16,25 @@ export class HomePage {
   constructor(private navController: NavController,
     private messages: Messages) {
     this.initPage();
+  }
+
+  openRoute(message) {
+    let directions = { latitude: message.lat, longitude: message.lng};
+
+    this.navController.push(MessageRoutePage, { directions });
+  }
+
+  openMessage(message) {
+    if (this.isNear(message)) {
+      this.navController.push(MessageViewPage, { message });
+    }
+    else {
+      alert('Mensagem está muito distante.');
+    }
+  }
+
+  private isNear(message) {
+    return message.distance <= 0.3;
   }
 
   private initPage() {
