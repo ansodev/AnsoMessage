@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Lidas
+    </ion-title>
+    <button menuToggle><ion-icon name="menu"></ion-icon></button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let message of messagesList">
+    <div class="box-address">
+      {{message.address}}
+    </div>
+
+    <div class="box-img">
+      <img [src]="message.map" alt="" />
+      <button fab fab-right fab-top class="fab-map" (click)="openRoute(message)"><ion-icon name="navigate"></ion-icon></button>
+    </div>
+
+    <ion-card-content>
+      <h2>{{message.senderName}}</h2>
+      <button primary clear block (click)="openMessage(message)">Ler</button>
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

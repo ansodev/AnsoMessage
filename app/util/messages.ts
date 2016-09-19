@@ -25,11 +25,12 @@ export class Messages {
     });
   }
 
-  get(successCallback) {
+  get(read: boolean, successCallback) {
     let ref = this.firebase.database().ref('messages').child(this.user.id);
 
-    ref.orderByChild('read').equalTo(false).on('child_added', (snapshot) => {
+    ref.orderByChild('read').equalTo(read).on('child_added', (snapshot) => {
       let message = snapshot.val();
+      message.key = snapshot.key;
 
       message.map =  "https://maps.googleapis.com/maps/api/staticmap?center=" +
         message.lat + ", " + message.lng +
@@ -40,5 +41,13 @@ export class Messages {
 
       successCallback(message);
     })
+  }
+
+  setMessageRead(message) {
+    let updates = {};
+
+    updates[`/messages/${this.user.id}/${message.key}/read`] = true;
+
+    return this.firebase.database().ref().update(updates);
   }
 }
