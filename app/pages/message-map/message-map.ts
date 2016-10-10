@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, Platform, NavParams } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 import { Messages } from '../../util/messages';
+import { Fire } from '../../util/fire';
+import { Push } from '../../util/push';
 
 declare var google: any;
 
@@ -15,7 +17,7 @@ export class MessageMapPage {
   position: any = {};
 
   constructor(private nav: NavController, private params: NavParams,
-    private messages: Messages, platform: Platform) {
+    private messages: Messages, platform: Platform, private fire: Fire) {
 
     platform.ready().then(() => {
       this.initPage();
@@ -71,7 +73,15 @@ export class MessageMapPage {
 
   onSendMessage() {
     this.messages.send(this.friend, this.message, this.position).then(() => {
-      this.nav.pop();
+
+      this.fire.getUser(this.friend.id, user => {
+        Push.send(this.messages.user, user, () => {
+          this.nav.pop();
+        }, (error) => {
+          alert(JSON.stringify(error));
+        })
+      });
+
     });
   }
 }

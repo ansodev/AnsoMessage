@@ -7,4 +7,25 @@ export class Push {
         alert(JSON.stringify(jsonData));
       });
   }
+
+  static getPushId(successCallback) {
+    window.plugins.OneSignal.getIds(ids => {
+      successCallback(ids.userId);
+    });
+  }
+
+  static send(sender, destination, successCallback, errorCallback) {
+    let notification = {
+      contents: {
+        en: `Seu amigo ${sender.name} deixou uma mensagem para você.`
+      },
+      include_player_ids: [destination.pushId]
+    }
+
+    window.plugins.OneSignal.postNotification(notification, response => {
+      successCallback();
+    }, (error) => {
+      errorCallback(error);
+    })
+  }
 }

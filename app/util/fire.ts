@@ -17,11 +17,11 @@ export class Fire {
     firebase.initializeApp(config);
   }
 
-  login(token: string, successCallback, errorCallback) {
+  login(token: string, pushId: string, successCallback, errorCallback) {
     let credential = firebase.auth.FacebookAuthProvider.credential(token);
 
     firebase.auth().signInWithCredential(credential).then(response => {
-      this.setUser(token, response.providerData[0]);
+      this.setUser(token, pushId, response.providerData[0]);
       successCallback();
     }, error => {
       errorCallback(error);
@@ -32,11 +32,21 @@ export class Fire {
     return firebase;
   }
 
-  private setUser(token: string, authData: any) {
+  getUser(id, successCallback) {
+    let ref = firebase.database().ref('users').child(id);
+
+    ref.once('value', (snapshot) => {
+      let user = snapshot.val();
+      successCallback(user);
+    })
+  }
+
+  private setUser(token: string, pushId: string, authData: any) {
     this.user.name = authData.displayName;
     this.user.photo = authData.photoURL;
     this.user.id = authData.uid;
     this.user.token = token;
+    this.user.pushId = pushId;
 
     this.saveUser();
   }
@@ -44,7 +54,8 @@ export class Fire {
   private saveUser() {
     firebase.database().ref('users').child(this.user.id).set({
       name: this.user.name,
-      photo: this.user.photo
+      photo: this.user.photo,
+      pushId: this.user.pushId
     });
   }
 }
